@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Dashboard</title>
+    <title>Admin 1Souvenir</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -187,10 +187,10 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
-                <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-                    style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+            <a href="" class="brand-link d-flex align-items-center">
+                <img src="{{ asset('images/Logo-1SOUVENIR.png') }}" alt="Logo" class="brand-image elevation-3"
+                    style="width: 100px; height: auto; background-color: white; padding: 5px; border-radius: 5px;">
+                <span class="brand-text font-weight-light ms-2 text-light">1SOUVENIR</span>
             </a>
 
             <!-- Sidebar -->
@@ -198,10 +198,15 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp   " class="img-circle elevation-2"
+                            alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="#" class="d-block">
+                            @if (Auth::check())
+                                {{ Auth::user()->name }}
+                            @endif
+                        </a>
                     </div>
                 </div>
 
@@ -224,19 +229,19 @@
                         data-accordion="false">
                         <li class="nav-item">
                             <a href="{{ route('admin.dashboard') }}" class="nav-link">
-                                <i class="nav-icon fas fa-th fs-5"></i>
+                                <i class="nav-icon fas fa-home fs-5"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-th fs-5 me-2"></i>
+                                <i class="nav-icon fas fa-users fs-5 me-2"></i>
                                 <p>User</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('logout') }}" class="nav-link">
-                                <i class="nav-icon fas fa-th fs-5 me-2"></i>
+                                <i class="nav-icon fas fa-sign-out-alt fs-5 me-2"></i>
                                 <p>Logout</p>
                             </a>
                         </li>
@@ -251,10 +256,12 @@
         @yield('content')
         <!-- /.content-wrapper -->
         <footer class="main-footer">
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+            <strong>Copyright &copy; {{ date('Y') }}
+                <a href="https://adminlte.io">1Souvenir</a>.
+            </strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 3.2.0
+                <b>Rulztarito</b>
             </div>
         </footer>
 
