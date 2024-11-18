@@ -240,6 +240,18 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-users fs-5 me-2"></i>
+                                <p>Data Karyawan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-users fs-5 me-2"></i>
+                                <p>Data Pelanggan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('logout') }}" class="nav-link">
                                 <i class="nav-icon fas fa-sign-out-alt fs-5 me-2"></i>
                                 <p>Logout</p>

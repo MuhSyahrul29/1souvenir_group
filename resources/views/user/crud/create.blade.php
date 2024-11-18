@@ -58,6 +58,17 @@
                                                 <small>{{ $message }}</small>
                                             @enderror
                                         </div>
+                                        <div class="form-group">
+                                            <label for="role">Role</label>
+                                            <select name="role" class="form-control" required>
+                                                @foreach ($roles as $role)
+                                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('role')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
                                     </div>
                                     <!-- /.card-body -->
 

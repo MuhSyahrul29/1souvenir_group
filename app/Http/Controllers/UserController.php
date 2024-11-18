@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Auth\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -15,28 +16,30 @@ class UserController extends Controller
     }
 
     public function create(){
+        $roles = Role::all();
         return view('user.crud.create', compact('roles'));
     }
 
-    public function store(Request $request){
-        $validator = Validator::make($request->all(), [
-            'nama' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6',
-            'role_id' => 'required|exists:roles,id',
-        ]);
-        if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+    public function store(Request $request)
+{
+    $request->validate([
+        'nama' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|min:6',
+        'role' => 'required|exists:roles,id', // Validasi role harus valid
+    ]);
 
-        $data = [
-            'name' => $request->nama,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role_id' => $request->role_id,
-        ];
+    // Simpan user dengan role_id
+    $user = User::create([
+        'name' => $request->nama,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'role_id' => $request->role, // Pastikan ini sesuai dengan input
+    ]);
 
-        User::create($data);
-        return redirect()->route('user.index')->with('success', 'User created successfully.');
-    }
+    return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan!');
+}
+
 
     public function edit($id){
         $data = User::findOrFail($id);
