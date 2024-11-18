@@ -20,7 +20,7 @@
         <!-- /.content-header -->
         <section class="content">
             <div class="container-fluid">
-                <form action="{{ route('admin.user.update', ['id' => $data->id]) }}" method="POST">
+                <form action="{{ route('user.update', ['id' => $data->id]) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -48,6 +48,19 @@
                                             <input type="email" class="form-control" id="exampleInputEmail1"
                                                 name="email" value="{{ $data->email }}" placeholder="Enter email">
                                             @error('email')
+                                                <small>{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="role_id">Role</label>
+                                            <select name="role_id" id="role_id" class="form-control">
+                                                @foreach ($roles as $role)
+                                                    <option value="{{ $role->id }}" {{ $data->role_id == $role->id ? 'selected' : '' }}>
+                                                        {{ $role->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('role_id')
                                                 <small>{{ $message }}</small>
                                             @enderror
                                         </div>

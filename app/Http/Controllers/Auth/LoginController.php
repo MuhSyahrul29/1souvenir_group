@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -26,7 +27,7 @@ class LoginController extends Controller
         ];
 
         if(Auth::attempt($data)){
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('dashboard');
         }else {
             return redirect()->route('login')->with('error','Email atau Password Salah');
         };
@@ -62,7 +63,7 @@ class LoginController extends Controller
         ];
 
         if(Auth::attempt($login)){
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('dashboard');
         }else {
             return redirect()->route('login')->with('error','Email atau Password Salah');
         };
