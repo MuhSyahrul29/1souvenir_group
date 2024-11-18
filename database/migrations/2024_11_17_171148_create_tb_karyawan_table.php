@@ -11,7 +11,7 @@ class CreateTbKaryawanTable extends Migration
         Schema::create('tb_karyawan', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('inisial')->length(9);
+            $table->string('inisial')->length(9);
             $table->timestamps();
         });
     }

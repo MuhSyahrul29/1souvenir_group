@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,3 +42,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('delete');
     });
 });
+
+Route::middleware(['auth', 'role:karyawan'])->prefix('karyawan')->name('karyawan.')->group(function () {
+    Route::get('/dashboard', [KaryawanController::class, 'dashboard'])->name('dashboard');
+    Route::get('/penawaran', [KaryawanController::class, 'index'])->name('penawaran.index');
+    Route::get('/penawaran/create', [KaryawanController::class, 'create'])->name('penawaran.create');
+    Route::post('/penawaran/store', [KaryawanController::class, 'store'])->name('penawaran.store');
+});
+
