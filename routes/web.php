@@ -30,9 +30,9 @@ Route::get('/logout',[LoginController::class,'logout'])->name('logout');
 Route::get('/register',[LoginController::class,'register'])->name('register');
 Route::post('/register-proses',[LoginController::class,'register_proses'])->name('register-proses');
 
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
-// });
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+});
 
 // Route::middleware(['auth', 'role:admin'])->group(function () {
 //     Route::prefix('admin')->name('admin.')->group(function () {

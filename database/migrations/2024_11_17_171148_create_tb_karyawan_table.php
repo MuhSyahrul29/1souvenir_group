@@ -12,7 +12,11 @@ class CreateTbKaryawanTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('inisial')->length(9);
+            $table->unsignedBigInteger('user_id')->nullable(); // Relasi ke tabel users
             $table->timestamps();
+
+            // Foreign key ke tabel users
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

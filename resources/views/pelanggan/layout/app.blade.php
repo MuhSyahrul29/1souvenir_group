@@ -228,13 +228,13 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <a href="{{ route('karyawan.dashboard') }}" class="nav-link">
+                            <a href="{{ route('pelanggan.dashboard') }}" class="nav-link">
                                 <i class="nav-icon fas fa-home fs-5"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('karyawan.penawaran.index') }}" class="nav-link">
+                            <a href="" class="nav-link">
                                 <i class="nav-icon fas fa-users fs-5 me-2"></i>
                                 <p>Pemesanan</p>
                             </a>

@@ -10,44 +10,57 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $data = User::with('role')->get();
         return view('admin.user.index', compact('data'));
     }
 
-    public function create(){
+    public function create()
+    {
         $roles = Role::all();
         return view('admin.user.create', compact('roles'));
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'nama' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required|min:6',
-        'role' => 'required|exists:roles,id', // Validasi role harus valid
-    ]);
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+            'role' => 'required|exists:roles,id', // Validasi role harus valid
+        ]);
 
-    // Simpan user dengan role_id
-    $user = User::create([
-        'name' => $request->nama,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'role_id' => $request->role, // Pastikan ini sesuai dengan input
-    ]);
+        // Simpan user dengan role_id
+        $user = User::create([
+            'name' => $request->nama,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role_id' => $request->role, // Pastikan ini sesuai dengan input
+        ]);
 
-    return redirect()->route('admin.user.index')->with('success', 'User berhasil ditambahkan!');
-}
+        $roleKaryawanId = \App\Models\Auth\Role::where('name', 'karyawan')->value('id');
+        if ($request->role == $roleKaryawanId) {
+            \App\Models\Karyawan::create([
+                'name' => $request->nama,
+                'inisial' => substr($request->nama, 0, 3), // Buat inisial otomatis
+                'user_id' => $user->id, // Relasi ke User
+            ]);
+        }
 
-
-    public function edit($id){
-        $data = User::findOrFail($id);
-        $roles = \App\Models\Auth\Role::all();
-        return view('admin.user.crud.edit', compact('data', 'roles'));
+        return redirect()->route('admin.user.index')->with('success', 'User berhasil ditambahkan!');
     }
 
-    public function update(Request $request, $id){
+
+    public function edit($id)
+    {
+        $data = User::findOrFail($id);
+        $roles = \App\Models\Auth\Role::all();
+        return view('admin.user.edit', compact('data', 'roles'));
+    }
+
+    public function update(Request $request, $id)
+    {
         $validator = Validator::make($request->all(), [
             'nama' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
@@ -70,7 +83,8 @@ class UserController extends Controller
         return redirect()->route('admin.user.index')->with('success', 'User updated successfully.');
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $data = User::findOrFail($id);
         $data->delete();
 

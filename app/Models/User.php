@@ -45,8 +45,32 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function karyawan()
+    {
+        return $this->hasOne(Karyawan::class);
+    }
+
+    public function pelanggan()
+    {
+        return $this->hasOne(Pelanggan::class);
+    }
+
     public function role()
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
+
+
+
+    // public static function boot()
+    // {
+    //     parent::boot();
+
+    //     // Cegah pembuatan akun admin langsung
+    //     static::creating(function ($user) {
+    //         if ($user->role_id === \App\Models\Auth\Role::where('name', 'admin')->value('id')) {
+    //             throw new \Exception('Tidak dapat membuat akun admin langsung melalui registrasi.');
+    //         }
+    //     });
+    // }
 }

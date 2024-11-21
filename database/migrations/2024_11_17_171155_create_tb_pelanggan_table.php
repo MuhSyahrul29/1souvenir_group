@@ -11,7 +11,11 @@ class CreateTbPelangganTable extends Migration
         Schema::create('tb_pelanggan', function (Blueprint $table) {
             $table->id();
             $table->string('name_customer');
+            $table->unsignedBigInteger('user_id')->nullable(); // Relasi ke tabel users
             $table->timestamps();
+
+            // Foreign key ke tabel users
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

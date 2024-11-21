@@ -14,4 +14,9 @@ class Karyawan extends Model
         'name',
         'inisial'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

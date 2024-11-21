@@ -60,6 +60,7 @@
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ $data->name }}</td>
                                                 <td>{{ $data->inisial }}</td>
+                                                <td>{{ $data->user->email ?? '' }}</td>
                                                 <td>
                                                     <a href="{{ route('admin.karyawan.edit', $data->id) }}"
                                                         class="btn btn-primary btn-sm"><i class="fas fa-pen"></i> Edit</a>

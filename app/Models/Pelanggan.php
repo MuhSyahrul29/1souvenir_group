@@ -12,5 +12,12 @@ class Pelanggan extends Model
     protected $table = 'tb_pelanggan';
 
     // Tentukan kolom yang bisa diisi (fillable)
-    protected $fillable = ['name_customer'];
+    protected $fillable = [
+        'name_customer'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

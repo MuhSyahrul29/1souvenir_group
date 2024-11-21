@@ -19,7 +19,7 @@ class AdminController extends Controller
 
     public function indexKaryawan()
     {
-        $karyawan = Karyawan::all(); // Ambil semua data karyawan
+        $karyawan = \App\Models\Karyawan::with('user')->get(); // Ambil semua data karyawan
         return view('admin.karyawan.index', compact('karyawan'));
     }
 
