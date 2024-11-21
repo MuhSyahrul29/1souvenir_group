@@ -12,12 +12,12 @@ class UserController extends Controller
 {
     public function index() {
         $data = User::with('role')->get();
-        return view('user.dashboard.index', compact('data'));
+        return view('admin.user.index', compact('data'));
     }
 
     public function create(){
         $roles = Role::all();
-        return view('user.crud.create', compact('roles'));
+        return view('admin.user.create', compact('roles'));
     }
 
     public function store(Request $request)
@@ -37,14 +37,14 @@ class UserController extends Controller
         'role_id' => $request->role, // Pastikan ini sesuai dengan input
     ]);
 
-    return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan!');
+    return redirect()->route('admin.user.index')->with('success', 'User berhasil ditambahkan!');
 }
 
 
     public function edit($id){
         $data = User::findOrFail($id);
         $roles = \App\Models\Auth\Role::all();
-        return view('user.crud.edit', compact('data', 'roles'));
+        return view('admin.user.crud.edit', compact('data', 'roles'));
     }
 
     public function update(Request $request, $id){
@@ -67,13 +67,13 @@ class UserController extends Controller
         }
 
         User::whereId($id)->update($data);
-        return redirect()->route('user.index')->with('success', 'User updated successfully.');
+        return redirect()->route('admin.user.index')->with('success', 'User updated successfully.');
     }
 
     public function delete($id){
         $data = User::findOrFail($id);
         $data->delete();
 
-        return redirect()->route('user.index')->with('success', 'User deleted successfully.');
+        return redirect()->route('admin.user.index')->with('success', 'User deleted successfully.');
     }
 }

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class HomeController extends Controller
 {
     public function dashboard(){
-        return view('dashboard');
+        return view('admin.dashboard.index');
     }
 
 }

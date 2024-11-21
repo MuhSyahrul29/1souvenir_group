@@ -1,73 +1,116 @@
-@extends('karyawan.layout.app')
+@extends('admin.layout.app')
 
 @section('content')
-<div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Daftar Penawaran</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('karyawan.dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Penawaran</li>
-                    </ol>
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Data Karyawan</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                            <li class="breadcrumb-item active">Data Karyawan</li>
+                        </ol>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <a href="{{ route('admin.karyawan.create') }}" class="btn btn-primary mb-3"> Tambah Data</a>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Data Karyawan</h3>
+
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="table_search" class="form-control float-right"
+                                            placeholder="Search">
+
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-hover text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama</th>
+                                            <th>Inisial</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($karyawan as $key => $data)
+                                            <tr>
+                                                <td>{{ $key + 1 }}</td>
+                                                <td>{{ $data->name }}</td>
+                                                <td>{{ $data->inisial }}</td>
+                                                <td>
+                                                    <a href="{{ route('admin.karyawan.edit', $data->id) }}"
+                                                        class="btn btn-primary btn-sm"><i class="fas fa-pen"></i> Edit</a>
+                                                    <a data-toggle="modal" data-target="#modal-hapus{{ $data->id }}"
+                                                        class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Hapus</a>
+                                                </td>
+                                            </tr>
+                                            <div class="modal fade" id="modal-hapus{{ $data->id }}">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Konfirmasi Hapus Data</h4>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Apakah Anda yakin ingin menghapus data
+                                                                <b>{{ $data->name }}</b>?
+                                                            </p>
+                                                        </div>
+                                                        <div class="modal-footer justify-content-between">
+                                                            <form
+                                                                action="{{ route('admin.karyawan.delete', $data->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="button" class="btn btn-default"
+                                                                    data-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-danger">Ya,
+                                                                    Hapus</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.modal-content -->
+                                                </div>
+                                                <!-- /.modal-dialog -->
+                                            </div>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+        </section>
+        <!-- /.content -->
     </div>
-
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row mb-3">
-                <div class="col-12">
-                    <!-- Tombol Tambah Penawaran -->
-                    <a href="{{ route('karyawan.penawaran.create') }}" class="btn btn-success">
-                        <i class="fas fa-plus"></i> Tambah Penawaran
-                    </a>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Tabel Penawaran</h3>
-                </div>
-                <div class="card-body">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Tipe Order</th>
-                                <th>Referensi SO</th>
-                                <th>Nama Produk</th>
-                                <th>Jumlah</th>
-                                <th>Harga</th>
-                                <th>Tanggal</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($penawaran as $key => $p)
-                                <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $p->tipe_order }}</td>
-                                    <td>{{ $p->referensi_so }}</td>
-                                    <td>{{ $p->nama_produk }}</td>
-                                    <td>{{ $p->jumlah }}</td>
-                                    <td>{{ number_format($p->harga, 0, ',', '.') }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($p->tanggal)->format('d-m-Y') }}</td>
-                                    <td>
-                                        <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                        <a href="#" class="btn btn-danger btn-sm">Hapus</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
-</div>
 @endsection

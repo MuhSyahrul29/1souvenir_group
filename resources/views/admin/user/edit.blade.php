@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('admin.layout.app')
 @section('content')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -20,7 +20,7 @@
         <!-- /.content-header -->
         <section class="content">
             <div class="container-fluid">
-                <form action="{{ route('user.update', ['id' => $data->id]) }}" method="POST">
+                <form action="{{ route('admin.user.update', ['id' => $data->id]) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row">

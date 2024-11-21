@@ -9,10 +9,8 @@ class Penawaran extends Model
 {
     use HasFactory;
 
-    // Tentukan nama tabel
     protected $table = 'tb_penawaran';
 
-    // Tentukan kolom yang dapat diisi (fillable)
     protected $fillable = [
         'tipe_order',
         'referensi_so',
@@ -35,8 +33,16 @@ class Penawaran extends Model
         'id_brand',
     ];
 
-    public function setTglKirimAttribute($value)
+    // Relasi ke karyawan (user)
+    public function karyawan()
     {
-        $this->attributes['tgl_kirim'] = date('Y-m-d H:i:s', strtotime($value));
+        return $this->belongsTo(User::class, 'id_karyawan');
+    }
+
+    // Relasi ke customer
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class, 'id_customer');
     }
 }
+
