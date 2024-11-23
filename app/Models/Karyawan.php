@@ -12,7 +12,8 @@ class Karyawan extends Model
     protected $table = 'tb_karyawan';
     protected $fillable = [
         'name',
-        'inisial'
+        'inisial',
+        'user_id'
     ];
 
     public function user()

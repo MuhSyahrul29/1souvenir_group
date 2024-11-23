@@ -34,16 +34,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 });
 
-// Route::middleware(['auth', 'role:admin'])->group(function () {
-//     Route::prefix('admin')->name('admin.')->group(function () {
-//         Route::get('/user', [UserController::class, 'index'])->name('user.index');
-//         Route::get('/create', [UserController::class, 'create'])->name('create');
-//         Route::post('/store', [UserController::class, 'store'])->name('store');
-//         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
-//         Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
-//         Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('delete');
-//     });
-// });
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard Admin
@@ -77,6 +67,15 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         Route::get('/edit/{id}', [AdminController::class, 'editPelanggan'])->name('edit');
         Route::put('/update/{id}', [AdminController::class, 'updatePelanggan'])->name('update');
         Route::delete('/delete/{id}', [AdminController::class, 'deletePelanggan'])->name('delete');
+    });
+
+    Route::prefix('penawaran')->name('penawaran.')->group(function () {
+        Route::get('/', [AdminController::class, 'indexPenawaran'])->name('index');
+        Route::get('/create', [AdminController::class, 'createPenawaran'])->name('create');
+        Route::post('/store', [AdminController::class, 'storePenawaran'])->name('store');
+        Route::get('/edit/{id}', [AdminController::class, 'editPenawaran'])->name('edit');
+        Route::put('/update/{id}', [AdminController::class, 'updatePenawaran'])->name('update');
+        Route::delete('/delete/{id}', [AdminController::class, 'deletePenawaran'])->name('delete');
     });
 });
 

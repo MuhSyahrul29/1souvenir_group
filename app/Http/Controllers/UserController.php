@@ -48,6 +48,14 @@ class UserController extends Controller
             ]);
         }
 
+        $rolePelangganId = \App\Models\Auth\Role::where('name', 'pelanggan')->value('id');
+        if ($request->role == $rolePelangganId) {
+            \App\Models\Pelanggan::create([
+                'name_customer' => $request->nama,
+                'user_id' => $user->id, // Relasi ke User
+            ]);
+        }
+
         return redirect()->route('admin.user.index')->with('success', 'User berhasil ditambahkan!');
     }
 

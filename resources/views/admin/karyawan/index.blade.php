@@ -51,7 +51,7 @@
                                             <th>No</th>
                                             <th>Nama</th>
                                             <th>Inisial</th>
-                                            <th>Action</th>
+                                            <th>Email</th>
                                         </tr>
                                     </thead>
                                     <tbody>

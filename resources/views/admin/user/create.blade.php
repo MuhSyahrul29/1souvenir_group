@@ -73,7 +73,8 @@
                                     <!-- /.card-body -->
 
                                     <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <a href="{{ route('admin.user.index') }}" class="btn btn-secondary">Batal</a>
                                     </div>
                                 </form>
                             </div>

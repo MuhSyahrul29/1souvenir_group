@@ -18,7 +18,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Pelanggan</th>
-                                    <th>Aksi</th>
+                                    <th>Email</th>
                                 </tr>
                             </thead>
                             <tbody>

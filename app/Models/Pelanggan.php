@@ -13,7 +13,8 @@ class Pelanggan extends Model
 
     // Tentukan kolom yang bisa diisi (fillable)
     protected $fillable = [
-        'name_customer'
+        'name_customer',
+        'user_id'
     ];
 
     public function user()

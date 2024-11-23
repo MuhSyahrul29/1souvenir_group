@@ -103,4 +103,41 @@ class AdminController extends Controller
         Pelanggan::findOrFail($id)->delete();
         return redirect()->route('admin.pelanggan.index')->with('success', 'Pelanggan berhasil dihapus.');
     }
+
+    public function indexPenawaran()
+{
+    $penawaran = Penawaran::all();
+    return view('admin.penawaran.index', compact('penawaran'));
+}
+
+public function createPenawaran()
+{
+    return view('admin.penawaran.create');
+}
+
+public function storePenawaran(Request $request)
+{
+    Penawaran::create($request->all());
+    return redirect()->route('admin.penawaran.index')->with('success', 'Penawaran berhasil ditambahkan.');
+}
+
+public function editPenawaran($id)
+{
+    $penawaran = Penawaran::findOrFail($id);
+    return view('admin.penawaran.edit', compact('penawaran'));
+}
+
+public function updatePenawaran(Request $request, $id)
+{
+    $penawaran = Penawaran::findOrFail($id);
+    $penawaran->update($request->all());
+    return redirect()->route('admin.penawaran.index')->with('success', 'Penawaran berhasil diubah.');
+}
+
+public function deletePenawaran($id)
+{
+    Penawaran::findOrFail($id)->delete();
+    return redirect()->route('admin.penawaran.index')->with('success', 'Penawaran berhasil dihapus.');
+}
+
 }
