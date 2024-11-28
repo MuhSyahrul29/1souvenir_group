@@ -95,6 +95,7 @@
 
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <a href="{{ route('karyawan.penawaran.index') }}" class="btn btn-secondary">Batal</a>
                                 </div>
                             </div>
                             <!-- /.card -->

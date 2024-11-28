@@ -20,4 +20,10 @@ class Karyawan extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // Relasi ke Penawaran
+    public function penawaran()
+    {
+        return $this->hasMany(Penawaran::class, 'id_karyawan', 'id');
+    }
 }

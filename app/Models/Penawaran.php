@@ -33,16 +33,55 @@ class Penawaran extends Model
         'id_brand',
     ];
 
-    // Relasi ke karyawan (user)
+    protected $dates = ['tgl_kirim'];
+
+    // Relasi ke Karyawan
     public function karyawan()
     {
-        return $this->belongsTo(User::class, 'id_karyawan');
+        return $this->belongsTo(Karyawan::class, 'id_karyawan', 'id');
     }
 
-    // Relasi ke customer
+    // Relasi ke Pelanggan
     public function pelanggan()
     {
-        return $this->belongsTo(Pelanggan::class, 'id_customer');
+        return $this->belongsTo(Pelanggan::class, 'id_customer', 'id');
+    }
+
+    public function ekspedisi()
+    {
+        return $this->belongsTo(Ekspedisi::class, 'id_ekspedisi', 'id');
+    }
+
+    public function stiker()
+    {
+        return $this->belongsTo(Stiker::class, 'id_stiker', 'id');
+    }
+
+    public function compro()
+    {
+        return $this->belongsTo(Compro::class, 'id_compro', 'id');
+    }
+
+    public function kardus()
+    {
+        return $this->belongsTo(Kardus::class, 'id_kardus', 'id');
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'id_brand', 'id');
+    }
+
+    // Relasi ke User melalui Karyawan
+    public function userKaryawan()
+    {
+        return $this->hasOneThrough(User::class, Karyawan::class, 'id', 'id', 'id_karyawan', 'user_id');
+    }
+
+    // Relasi ke User melalui Pelanggan
+    public function userPelanggan()
+    {
+        return $this->hasOneThrough(User::class, Pelanggan::class, 'id', 'id', 'id_customer', 'user_id');
     }
 }
 

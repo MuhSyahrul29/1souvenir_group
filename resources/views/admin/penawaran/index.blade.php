@@ -22,7 +22,6 @@
         <div class="container-fluid">
             <div class="row mb-3">
                 <div class="col-12">
-                    <!-- Tombol Tambah Penawaran -->
                     <a href="{{ route('admin.penawaran.create') }}" class="btn btn-success">
                         <i class="fas fa-plus"></i> Tambah Penawaran
                     </a>
@@ -40,9 +39,22 @@
                                 <th>No</th>
                                 <th>Tipe Order</th>
                                 <th>Referensi SO</th>
+                                <th>Customer</th>
+                                <th>Karyawan</th>
                                 <th>Nama Produk</th>
                                 <th>Jumlah</th>
                                 <th>Harga</th>
+                                <th>Biaya Kirim</th>
+                                <th>Ekspedisi</th>
+                                <th>Tanggal Kirim</th>
+                                <th>Stiker</th>
+                                <th>Compro</th>
+                                <th>Kardus</th>
+                                <th>Publikasi</th>
+                                <th>Spesifikasi</th>
+                                <th>Keterangan</th>
+                                <th>Folder Kerja</th>
+                                <th>Brand</th>
                                 <th>Tanggal</th>
                                 <th>Aksi</th>
                             </tr>
@@ -53,9 +65,22 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $p->tipe_order }}</td>
                                     <td>{{ $p->referensi_so }}</td>
+                                    <td>{{ $p->pelanggan->name_customer ?? '-' }}</td>
+                                    <td>{{ $p->karyawan->name ?? '-' }}</td>
                                     <td>{{ $p->nama_produk }}</td>
                                     <td>{{ $p->jumlah }}</td>
-                                    <td>{{ number_format($p->harga, 0, ',', '.') }}</td>
+                                    <td>Rp{{ number_format($p->harga, 0, ',', '.') }}</td>
+                                    <td>{{ $p->biaya_kirim }}</td>
+                                    <td>{{ $p->ekspedisi->nama_ekspedisi ?? '-' }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($p->tgl_kirim)->format('d-m-Y') }}</td>
+                                    <td>{{ $p->stiker->nama_stiker ?? '-' }}</td>
+                                    <td>{{ $p->compro->nama_compro ?? '-' }}</td>
+                                    <td>{{ $p->kardus->nama_kardus ?? '-' }}</td>
+                                    <td>{{ $p->publikasi }}</td>
+                                    <td>{{ $p->spesifikasi }}</td>
+                                    <td>{{ $p->keterangan }}</td>
+                                    <td>{{ $p->folder_kerja }}</td>
+                                    <td>{{ $p->brand->nama_brand ?? '-' }}</td>
                                     <td>{{ \Carbon\Carbon::parse($p->tanggal)->format('d-m-Y') }}</td>
                                     <td>
                                         <a href="{{ route('admin.penawaran.edit', $p->id) }}" class="btn btn-primary btn-sm">

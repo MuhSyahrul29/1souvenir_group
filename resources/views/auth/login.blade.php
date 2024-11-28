@@ -15,12 +15,29 @@
     <link rel="stylesheet" href="{{ asset('Lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('Lte/dist/css/adminlte.min.css') }}">
+
+    <style>
+        .card-header {
+            background-color: #fe9e29 !important;
+            color: white !important;
+        }
+
+        .btn-primary {
+            background-color: #fe9e29 !important;
+            border-color: #fe9e29 !important;
+        }
+
+        .btn-primary:hover {
+            background-color: #e68a23 !important;
+            border-color: #e68a23 !important;
+        }
+    </style>
 </head>
 
 <body class="hold-transition login-page">
     <div class="login-box">
         <!-- /.login-logo -->
-        <div class="card card-outline card-primary">
+        <div class="card card-primary">
             <div class="card-header text-center">
                 <a href="" class="h1"><b>Login </b>1Souvenir</a>
             </div>
@@ -69,9 +86,9 @@
                     </div>
                 </form>
 
-                <p class="mb-1">
+                {{-- <p class="mb-1">
                     <a href="forgot-password.html">I forgot my password</a>
-                </p>
+                </p> --}}
                 <p class="mb-0">
                     <a href="{{ route('register') }}" class="text-center">Register a new Account</a>
                 </p>
