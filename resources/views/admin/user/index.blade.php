@@ -52,7 +52,7 @@
                                             <th>Nama</th>
                                             <th>Email</th>
                                             <th>Role</th>
-                                            <th>Action</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -63,11 +63,26 @@
                                                 <td>{{ $d->email }}</td>
                                                 <td>{{ $d->role->name ?? 'Tidak ada role' }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.user.edit', ['id' => $d->id]) }}"
-                                                        class="btn btn-primary"><i class="fas fa-pen"></i> Edit</a>
-                                                    <a data-toggle="modal" data-target="#modal-hapus{{ $d->id }}"
-                                                        class="btn btn-danger ml-4"><i class="fas fa-trash-alt"></i>
-                                                        Hapus</a>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Aksi
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <!-- Tombol Edit -->
+                                                            <a class="dropdown-item" href="{{ route('admin.user.edit', $d->id) }}">
+                                                                <i class="fas fa-pen"></i> Edit
+                                                            </a>
+
+                                                            <!-- Tombol Hapus -->
+                                                            <form action="{{ route('admin.user.delete', $d->id) }}" method="POST" style="display: inline;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="dropdown-item text-danger">
+                                                                    <i class="fas fa-trash-alt"></i> Hapus
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <div class="modal fade" id="modal-hapus{{ $d->id }}">

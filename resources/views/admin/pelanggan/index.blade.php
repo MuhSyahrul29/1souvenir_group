@@ -2,8 +2,30 @@
 
 @section('content')
     <div class="content-wrapper">
-        <div class="content-header">
+        {{-- <div class="content-header">
             <h1>Data Pelanggan</h1>
+        </div>
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                <li class="breadcrumb-item active">Data Karyawan</li>
+            </ol>
+        </div> --}}
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Data Pelanggan</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                            <li class="breadcrumb-item active">Data Pelanggan</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
         </div>
         <section class="content">
             <div class="container-fluid">
@@ -19,6 +41,7 @@
                                     <th>No</th>
                                     <th>Nama Pelanggan</th>
                                     <th>Email</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -27,13 +50,35 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $data->name_customer }}</td>
                                         <td>{{ $data->user->email ?? '' }}</td>
-                                        <td>
+                                        {{-- <td>
                                             <a href="{{ route('admin.pelanggan.edit', $data->id) }}" class="btn btn-primary btn-sm">
                                                 <i class="fas fa-pen"></i> Edit
                                             </a>
                                             <a data-toggle="modal" data-target="#modal-hapus{{ $data->id }}" class="btn btn-danger btn-sm">
                                                 <i class="fas fa-trash"></i> Hapus
                                             </a>
+                                        </td> --}}
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Aksi
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <!-- Tombol Edit -->
+                                                    <a class="dropdown-item" href="{{ route('admin.pelanggan.edit', $data->id) }}">
+                                                        <i class="fas fa-pen"></i> Edit
+                                                    </a>
+
+                                                    <!-- Tombol Hapus -->
+                                                    <form action="{{ route('admin.pelanggan.delete', $data->id) }}" method="POST" style="display: inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="dropdown-item text-danger">
+                                                            <i class="fas fa-trash-alt"></i> Hapus
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                     <!-- Modal Hapus -->

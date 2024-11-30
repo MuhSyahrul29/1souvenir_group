@@ -20,7 +20,7 @@
 
         <section class="content">
             <div class="container-fluid">
-                <form action="{{ route('admin.penawaran.store') }}" method="POST">
+                <form id="createPenawaranForm" action="{{ route('admin.penawaran.store') }}" method="POST">
                     @csrf
                     <div class="card">
                         <div class="card-header">
@@ -163,7 +163,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" class="btn btn-primary swalDefaultSuccess">Simpan</button>
                             <a href="{{ route('admin.penawaran.index') }}" class="btn btn-secondary">Kembali</a>
                         </div>
                     </div>
@@ -171,4 +171,25 @@
             </div>
         </section>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#createPenawaranForm').on('submit', function (e) {
+                e.preventDefault(); // Cegah form langsung dikirim
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Data berhasil disimpan!',
+                    showConfirmButton: false,
+                    timer: 1000
+                }).then(() => {
+                    // Setelah notifikasi selesai, kirimkan form
+                    this.submit();
+                });
+            });
+        });
+    </script>
+
 @endsection

@@ -255,8 +255,6 @@ class AdminController extends Controller
         return redirect()->route('admin.penawaran.index')->with('success', 'Penawaran berhasil diperbarui.');
     }
 
-
-
     public function deletePenawaran($id)
     {
         Penawaran::findOrFail($id)->delete();

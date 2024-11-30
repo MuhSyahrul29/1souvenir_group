@@ -35,8 +35,8 @@
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60"
-                width="60">
+            <img class="animation__shake" src="{{ asset('images/Logo-1SOUVENIR.png') }}" alt="1Souvenir" height=""
+                width="">
         </div>
 
         <!-- Navbar -->
@@ -198,7 +198,7 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp   " class="img-circle elevation-2"
+                        <img src="https://media.licdn.com/dms/image/v2/D5603AQF64AoEJuD0Ww/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1730784149717?e=2147483647&v=beta&t=iORGNvNnoW9ltA9Xu1MiqRAbV3gWZcWYLwX_Qs_WbZE   " class="img-circle elevation-2"
                             alt="User Image">
                     </div>
                     <div class="info">
@@ -234,7 +234,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="{{ route('pelanggan.penawaran.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-users fs-5 me-2"></i>
                                 <p>Pemesanan</p>
                             </a>
@@ -307,6 +307,12 @@
     <script src="{{ asset('Lte/dist/js/demo.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ asset('Lte/dist/js/pages/dashboard.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('.preloader').style.display = 'none';
+        });
+    </script>
 </body>
 
 </html>

@@ -52,6 +52,7 @@
                                             <th>Nama</th>
                                             <th>Inisial</th>
                                             <th>Email</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -62,11 +63,28 @@
                                                 <td>{{ $data->inisial }}</td>
                                                 <td>{{ $data->user->email ?? '' }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.karyawan.edit', $data->id) }}"
-                                                        class="btn btn-primary btn-sm"><i class="fas fa-pen"></i> Edit</a>
-                                                    <a data-toggle="modal" data-target="#modal-hapus{{ $data->id }}"
-                                                        class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Hapus</a>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Aksi
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <!-- Tombol Edit -->
+                                                            <a class="dropdown-item" href="{{ route('admin.karyawan.edit', $data->id) }}">
+                                                                <i class="fas fa-pen"></i> Edit
+                                                            </a>
+
+                                                            <!-- Tombol Hapus -->
+                                                            <form action="{{ route('admin.karyawan.delete', $data->id) }}" method="POST" style="display: inline;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="dropdown-item text-danger">
+                                                                    <i class="fas fa-trash-alt"></i> Hapus
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
                                                 </td>
+
                                             </tr>
                                             <div class="modal fade" id="modal-hapus{{ $data->id }}">
                                                 <div class="modal-dialog">

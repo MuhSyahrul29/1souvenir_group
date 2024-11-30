@@ -82,12 +82,22 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
 Route::middleware(['auth', 'role:karyawan'])->prefix('karyawan')->name('karyawan.')->group(function () {
     Route::get('/dashboard', [KaryawanController::class, 'dashboard'])->name('dashboard');
-    Route::get('/penawaran', [KaryawanController::class, 'index'])->name('penawaran.index');
-    Route::get('/penawaran/create', [KaryawanController::class, 'create'])->name('penawaran.create');
-    Route::post('/penawaran/store', [KaryawanController::class, 'store'])->name('penawaran.store');
+
+    Route::prefix('penawaran')->name('penawaran.')->group(function () {
+        Route::get('/', [KaryawanController::class, 'index'])->name('index');
+        Route::get('/create', [KaryawanController::class, 'create'])->name('create');
+        Route::post('/store', [KaryawanController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [KaryawanController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [KaryawanController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [KaryawanController::class, 'delete'])->name('delete');
+    });
 });
 
 
 Route::middleware(['auth', 'role:pelanggan'])->prefix('pelanggan')->name('pelanggan.')->group(function () {
     Route::get('/dashboard', [PelangganConrtroller::class, 'dashboard'])->name('dashboard');
+
+    Route::prefix('penawaran')->name('penawaran.')->group(function () {
+        Route::get('/', [PelangganConrtroller::class, 'indexPenawaran'])->name('index');
+    });
 });
