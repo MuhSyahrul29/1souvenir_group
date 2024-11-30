@@ -27,7 +27,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">Form Edit Penawaran</h3>
                             </div>
-                            <form action="{{ route('karyawan.penawaran.update', $penawaran->id) }}" method="POST">
+                            <form action="{{ route('karyawan.penawaran.update', $penawaran->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="card-body">
@@ -161,7 +161,19 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-
+                                            <div class="form-group">
+                                                <label for="gambar">Gambar Produk</label>
+                                                @if ($penawaran->gambar)
+                                                    <div class="mb-3">
+                                                        <img src="{{ asset('storage/' . $penawaran->gambar) }}" alt="Gambar Produk" class="img-thumbnail" style="width: 100px; height: auto;">
+                                                    </div>
+                                                @endif
+                                                <div class="custom-file">
+                                                    <input type="file" name="gambar" class="custom-file-input" id="gambar">
+                                                    <label class="custom-file-label" for="gambar">Pilih file</label>
+                                                </div>
+                                                <small class="text-muted">Kosongkan jika tidak ingin mengubah gambar.</small>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -176,4 +188,12 @@
             </div>
         </section>
     </div>
+    <script>
+        // Untuk menampilkan nama file yang dipilih di label
+        document.querySelector('.custom-file-input').addEventListener('change', function (e) {
+            var fileName = document.getElementById("gambar").files[0].name;
+            var nextSibling = e.target.nextElementSibling;
+            nextSibling.innerText = fileName;
+        });
+    </script>
 @endsection

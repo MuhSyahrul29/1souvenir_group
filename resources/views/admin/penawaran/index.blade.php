@@ -31,6 +31,20 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Tabel Penawaran</h3>
+                    <div class="card-tools">
+                        <form action="{{ route('admin.penawaran.index') }}" method="GET">
+                            <div class="input-group input-group-sm" style="width: 200px;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Cari Nama Produk"
+                                       value="{{ request('table_search') }}">
+
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -57,6 +71,7 @@
                                     <th>Folder Kerja</th>
                                     <th>Brand</th>
                                     <th>Tanggal</th>
+                                    <th>Gambar</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -83,6 +98,32 @@
                                         <td>{{ $p->folder_kerja }}</td>
                                         <td>{{ $p->brand->nama_brand ?? '-' }}</td>
                                         <td>{{ \Carbon\Carbon::parse($p->tanggal)->format('d-m-Y') }}</td>
+                                        <td>
+                                            @if ($p->gambar)
+                                                <a href="#" data-toggle="modal" data-target="#gambarModal{{ $p->id }}">
+                                                    <img src="{{ asset('storage/' . $p->gambar) }}" alt="Gambar Produk" width="50">
+                                                </a>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="gambarModal{{ $p->id }}" tabindex="-1" role="dialog" aria-labelledby="gambarModalLabel{{ $p->id }}" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="gambarModalLabel{{ $p->id }}">Gambar Produk</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body text-center">
+                                                                <img src="{{ asset('storage/' . $p->gambar) }}" alt="Gambar Produk" class="img-fluid">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @else
+                                                Tidak ada gambar
+                                            @endif
+                                        </td>
                                         <td>
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

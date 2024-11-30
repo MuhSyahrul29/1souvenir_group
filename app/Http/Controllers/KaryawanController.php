@@ -11,6 +11,7 @@ use App\Models\Compro;
 use App\Models\Kardus;
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -62,10 +63,21 @@ class KaryawanController extends Controller
             'keterangan' => 'nullable|string',
             'folder_kerja' => 'nullable|string',
             'id_brand' => 'required|exists:tb_brand,id',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Format tanggal kirim
         $tgl_kirim = \Carbon\Carbon::parse($request->tgl_kirim)->format('Y-m-d H:i:s');
+
+        // Handle file upload
+        $gambarPath = null;
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            // Ambil nama asli file
+            $fileName = time() . '-' . $file->getClientOriginalName();
+            // Simpan file di folder 'penawaran' dengan nama asli
+            $gambarPath = $file->storeAs('penawaran', $fileName, 'public');
+        }
 
         // Simpan data penawaran
         Penawaran::create([
@@ -88,6 +100,7 @@ class KaryawanController extends Controller
             'keterangan' => $request->keterangan,
             'folder_kerja' => $request->folder_kerja,
             'id_brand' => $request->id_brand,
+            'gambar' => $gambarPath,
         ]);
 
         // Redirect dengan pesan sukses
@@ -131,6 +144,7 @@ class KaryawanController extends Controller
             'keterangan' => 'nullable|string',
             'folder_kerja' => 'nullable|string',
             'id_brand' => 'required|exists:tb_brand,id',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Temukan data berdasarkan ID
@@ -138,6 +152,24 @@ class KaryawanController extends Controller
 
         // Format tanggal kirim
         $tgl_kirim = \Carbon\Carbon::parse($request->tgl_kirim)->format('Y-m-d H:i:s');
+
+        // Handle file upload
+        if ($request->hasFile('gambar')) {
+            // Hapus gambar lama jika ada
+            if ($penawaran->gambar && Storage::disk('public')->exists($penawaran->gambar)) {
+                Storage::disk('public')->delete($penawaran->gambar);
+            }
+
+            // Ambil file yang diunggah
+            $file = $request->file('gambar');
+            // Buat nama file baru dengan format angka-namaasli.ext
+            $fileName = time() . '-' . $file->getClientOriginalName();
+            // Simpan file di folder 'penawaran' dengan nama baru
+            $gambarPath = $file->storeAs('penawaran', $fileName, 'public');
+        } else {
+            $gambarPath = $penawaran->gambar; // Tetap gunakan gambar lama jika tidak ada perubahan
+        }
+
 
         // Update data
         $penawaran->update([
@@ -159,6 +191,7 @@ class KaryawanController extends Controller
             'keterangan' => $request->keterangan,
             'folder_kerja' => $request->folder_kerja,
             'id_brand' => $request->id_brand,
+            'gambar' => $gambarPath,
         ]);
 
         // Redirect ke halaman daftar penawaran dengan pesan sukses

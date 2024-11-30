@@ -20,7 +20,7 @@
 
         <section class="content">
             <div class="container-fluid">
-                <form action="{{ route('karyawan.penawaran.store') }}" method="POST">
+                <form action="{{ route('karyawan.penawaran.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card">
                         <div class="card-header">
@@ -159,6 +159,18 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="gambar">Upload Gambar</label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="gambar" name="gambar">
+                                                <label class="custom-file-label" for="gambar">Pilih file</label>
+                                            </div>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">Upload</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -171,4 +183,12 @@
             </div>
         </section>
     </div>
+    <script>
+        // Untuk menampilkan nama file yang dipilih di label
+        document.querySelector('.custom-file-input').addEventListener('change', function (e) {
+            var fileName = document.getElementById("gambar").files[0].name;
+            var nextSibling = e.target.nextElementSibling;
+            nextSibling.innerText = fileName;
+        });
+    </script>
 @endsection

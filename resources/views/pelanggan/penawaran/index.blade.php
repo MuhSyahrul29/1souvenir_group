@@ -49,6 +49,7 @@
                                     <th>Folder Kerja</th>
                                     <th>Brand</th>
                                     <th>Tanggal</th>
+                                    <th>Gambar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -74,6 +75,32 @@
                                         <td>{{ $p->folder_kerja }}</td>
                                         <td>{{ $p->brand->nama_brand ?? '-' }}</td>
                                         <td>{{ $p->tanggal ? \Carbon\Carbon::parse($p->tanggal)->format('d-m-Y') : '-' }}</td>
+                                        <td>
+                                            @if ($p->gambar)
+                                                <a href="#" data-toggle="modal" data-target="#gambarModal{{ $p->id }}">
+                                                    <img src="{{ asset('storage/' . $p->gambar) }}" alt="Gambar Produk" width="50">
+                                                </a>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="gambarModal{{ $p->id }}" tabindex="-1" role="dialog" aria-labelledby="gambarModalLabel{{ $p->id }}" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="gambarModalLabel{{ $p->id }}">Gambar Produk</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body text-center">
+                                                                <img src="{{ asset('storage/' . $p->gambar) }}" alt="Gambar Produk" class="img-fluid">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @else
+                                                Tidak ada gambar
+                                            @endif
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>

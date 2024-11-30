@@ -31,6 +31,7 @@ class Penawaran extends Model
         'keterangan',
         'folder_kerja',
         'id_brand',
+        'gambar',
     ];
 
     protected $dates = ['tgl_kirim'];
