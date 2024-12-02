@@ -175,6 +175,9 @@
                                 @endforelse
                             </tbody>
                         </table>
+                        <div class="d-flex justify-content-center">
+                            {{ $penawaran->appends(request()->except('page'))->links() }}
+                        </div>
                     </div>
                 </div>
             </div>

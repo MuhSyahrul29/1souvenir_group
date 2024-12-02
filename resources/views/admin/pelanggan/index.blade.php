@@ -47,17 +47,9 @@
                             <tbody>
                                 @foreach ($pelanggan as $key => $data)
                                     <tr>
-                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $data->name_customer }}</td>
                                         <td>{{ $data->user->email ?? '' }}</td>
-                                        {{-- <td>
-                                            <a href="{{ route('admin.pelanggan.edit', $data->id) }}" class="btn btn-primary btn-sm">
-                                                <i class="fas fa-pen"></i> Edit
-                                            </a>
-                                            <a data-toggle="modal" data-target="#modal-hapus{{ $data->id }}" class="btn btn-danger btn-sm">
-                                                <i class="fas fa-trash"></i> Hapus
-                                            </a>
-                                        </td> --}}
                                         <td>
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -11,6 +11,7 @@ use App\Models\Stiker;
 use App\Models\Compro;
 use App\Models\Kardus;
 use App\Models\Brand;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -19,8 +20,10 @@ class AdminController extends Controller
     {
         // Ambil semua data penawaran dengan relasi pelanggan dan karyawan
         $penawaran = Penawaran::with(['pelanggan', 'karyawan'])->get();
+        $penawaranCount = Penawaran::count();
+        $userCount = User::count();
 
-        return view('admin.dashboard.index', compact('penawaran'));
+        return view('admin.dashboard.index', compact('penawaran', 'penawaranCount', 'userCount'));
     }
 
     public function indexKaryawan()
@@ -69,7 +72,7 @@ class AdminController extends Controller
 
     public function indexPelanggan()
     {
-        $pelanggan = Pelanggan::all(); // Ambil semua data pelanggan
+        $pelanggan = Pelanggan::with('user')->get(); // Ambil data terbaru
         return view('admin.pelanggan.index', compact('pelanggan'));
     }
 
@@ -110,12 +113,6 @@ class AdminController extends Controller
         return redirect()->route('admin.pelanggan.index')->with('success', 'Pelanggan berhasil dihapus.');
     }
 
-    // public function indexPenawaran()
-    // {
-    //     $penawaran = Penawaran::with(['pelanggan', 'karyawan', 'ekspedisi', 'stiker', 'compro', 'kardus', 'brand'])->get();
-    //     return view('admin.penawaran.index', compact('penawaran'));
-    // }
-
     public function indexPenawaran(Request $request)
     {
         // Ambil nilai pencarian dari input (jika ada)
@@ -126,7 +123,7 @@ class AdminController extends Controller
             ->when($query, function ($queryBuilder) use ($query) {
                 $queryBuilder->where('nama_produk', 'like', '%' . $query . '%');
             })
-            ->paginate(0); // Menggunakan paginasi (opsional)
+            ->paginate(10); // Menggunakan paginasi (opsional)
 
         // Kirim data ke view
         return view('admin.penawaran.index', compact('penawaran', 'query'));

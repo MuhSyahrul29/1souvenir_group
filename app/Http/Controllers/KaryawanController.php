@@ -10,6 +10,7 @@ use App\Models\Stiker;
 use App\Models\Compro;
 use App\Models\Kardus;
 use App\Models\Brand;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
@@ -19,13 +20,24 @@ class KaryawanController extends Controller
 {
     public function dashboard()
     {
-        return view('karyawan.dashboard.index');
+        $penawaran = Penawaran::with(['pelanggan', 'karyawan'])->get();
+        $penawaranCount = Penawaran::count();
+        $userCount = User::count();
+
+        return view('karyawan.dashboard.index', compact('penawaran', 'penawaranCount', 'userCount'));
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $penawaran = Penawaran::with(['pelanggan', 'karyawan', 'ekspedisi', 'stiker', 'compro', 'kardus', 'brand'])->get();
-        return view('karyawan.penawaran.index', compact('penawaran'));
+        $query = $request->input('table_search');
+
+        $penawaran = Penawaran::with(['pelanggan', 'karyawan', 'ekspedisi', 'stiker', 'compro', 'kardus', 'brand'])
+        ->when($query, function ($queryBuilder) use ($query) {
+            $queryBuilder->where('nama_produk', 'like', '%' . $query . '%');
+        })
+        ->paginate(10); // Menggunakan paginasi (opsional)
+
+        return view('karyawan.penawaran.index', compact('penawaran','query'));
     }
 
     public function create()
